@@ -2,9 +2,7 @@ package com.davidhsu.newssideproject
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu
-import android.view.MenuItem
+import android.support.v7.app.AppCompatActivity
 
 import kotlinx.android.synthetic.main.activity_main.*
 
