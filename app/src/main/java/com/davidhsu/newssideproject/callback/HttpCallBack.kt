@@ -1,4 +1,4 @@
-package com.davidhsu.newssideproject.Callback
+package com.davidhsu.newssideproject.callback
 
 /**
  *

@@ -1,7 +1,7 @@
 package com.davidhsu.newssideproject
 
 import android.app.Application
-import com.davidhsu.newssideproject.Utils.LogUtil
+import com.davidhsu.newssideproject.utils.LogUtil
 import kotlin.properties.Delegates
 
 /**
