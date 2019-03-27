@@ -1,8 +1,8 @@
 package com.davidhsu.newssideproject.api
 
 import android.support.annotation.NonNull
-import com.davidhsu.newssideproject.Callback.HttpCallBack
-import com.davidhsu.newssideproject.Utils.LogUtil
+import com.davidhsu.newssideproject.callback.HttpCallBack
+import com.davidhsu.newssideproject.utils.LogUtil
 import com.davidhsu.newssideproject.api.model.ResponseNewsData
 import com.google.gson.JsonObject
 import retrofit2.Call

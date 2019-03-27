@@ -1,4 +1,4 @@
-package com.davidhsu.newssideproject.Utils
+package com.davidhsu.newssideproject.utils
 
 import android.util.Log
 
