@@ -24,28 +24,31 @@
             android:id="@+id/new_content"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/white"
             android:singleLine="false"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="@+id/news_form"
             app:layout_constraintTop_toBottomOf="@+id/news_form"
             tools:text="內容"
-            app:layout_constraintBottom_toTopOf="@+id/news_publishedAt"/>
+            app:layout_constraintBottom_toTopOf="@+id/news_publishedAt"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"/>
 
     <ImageView
             android:id="@+id/news_img"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
-            android:scaleType="fitCenter"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:src="@drawable/ic_sun"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
             android:layout_marginStart="8dp"/>
 
     <TextView
@@ -64,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/guideline"
-            app:layout_constraintGuide_begin="300dp"
+            app:layout_constraintGuide_begin="280dp"
             android:orientation="vertical"/>
 
 </android.support.constraint.ConstraintLayout>

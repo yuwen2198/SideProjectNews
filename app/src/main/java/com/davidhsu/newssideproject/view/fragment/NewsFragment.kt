@@ -1,7 +1,5 @@
 package com.davidhsu.newssideproject.view.fragment
 
-
-import android.content.Context
 import android.os.Bundle
 import android.support.annotation.Nullable
 import android.support.v4.app.Fragment
@@ -25,6 +23,10 @@ import kotlinx.android.synthetic.main.fragment_news.view.*
  */
 class NewsFragment : Fragment() {
 
+    companion object {
+        const val responseStatus = "ok"
+    }
+
     private var data : List<Article> = ArrayList()
 
     private val adapter : RecycleViewAdapter by lazy {
@@ -39,7 +41,6 @@ class NewsFragment : Fragment() {
     @Nullable
     override fun onCreateView(inflater: LayoutInflater, @Nullable container: ViewGroup?, @Nullable savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_news, container, false)
-        LogUtil.d("onCreateView")
 
         view.newsRV.layoutManager = LinearLayoutManager(activity)
         view.newsRV.adapter = adapter
@@ -53,7 +54,7 @@ class NewsFragment : Fragment() {
         apiComponent.getCompositeNewsInfo(object  : HttpCallBack{
             override fun onSuccess(responseNewsData: ResponseNewsData) {
 
-                if (responseNewsData.status == "ok") {
+                if (responseNewsData.status == responseStatus) {
                     data =  responseNewsData.articles
                     adapter.setData(data)
                     LogUtil.d("Success , data size = ${data.size}")

@@ -18,19 +18,16 @@ import kotlinx.android.synthetic.main.item_recycleview.view.*
  * @author : DavidHsu on 2019/03/28
  *
  */
-class RecycleViewAdapter(private val items: List<Article>?, private val context: FragmentActivity?) : RecyclerView.Adapter<RecycleViewViewHolder>() {
-
-    private var data : List<Article> = ArrayList()
+class RecycleViewAdapter(private var items: List<Article>?, private val context: FragmentActivity?) : RecyclerView.Adapter<RecycleViewViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecycleViewViewHolder {
-        LogUtil.d("onCreateViewHolder")
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.item_recycleview, parent, false)
         return RecycleViewViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecycleViewViewHolder, position: Int) {
-        val data = data[position]
+        val data = items!![position]
 
         val title = data.author
         if (title.isNullOrEmpty()){
@@ -40,12 +37,11 @@ class RecycleViewAdapter(private val items: List<Article>?, private val context:
         }
 
         val imgUrl = data.urlToImage
-        Glide.with(context!!).load(imgUrl).into(holder.imgNews)
+        Glide.with(context!!).load(imgUrl).centerCrop().fitCenter().into(holder.imgNews)
 
         holder.tvNewsContent.text = data.title
 
         holder.tvPublishAt.text = data.publishedAt
-        LogUtil.d("onBindViewHolder")
 
         holder.rootView.setOnClickListener { intentNews(data) }
     }
@@ -56,15 +52,12 @@ class RecycleViewAdapter(private val items: List<Article>?, private val context:
         context!!.startActivity(intent)
     }
 
-    override fun getItemCount(): Int {
-        LogUtil.d("items size = ${data.size}")
-        return data.size
-    }
+    override fun getItemCount(): Int = items!!.size
 
-    fun setData (items: List<Article>) {
-        data = items
-        LogUtil.d("data = $data")
+    fun setData (data: List<Article>) {
+        items = data
         notifyDataSetChanged()
+        LogUtil.d("data = $data")
     }
 
 }
