@@ -14,24 +14,24 @@ import retrofit2.http.GET
 interface NewsApi {
 
     @GET("top-headlines?country=tw&apiKey=7b370eccef7d4eca8d6af86e3ad40ea5")
-    fun getCompositeNews(@Body jsonObject: JsonObject): Call<ResponseNewsData>
+    fun getCompositeNews(): Call<ResponseNewsData>
 
     @GET("top-headlines?country=tw&category=business&apiKey=7b370eccef7d4eca8d6af86e3ad40ea5")
-    fun getBusinessNews(@Body jsonObject: JsonObject): Call<ResponseNewsData>
+    fun getBusinessNews(): Call<ResponseNewsData>
 
     @GET("top-headlines?country=tw&category=entertainment&apiKey=7b370eccef7d4eca8d6af86e3ad40ea5")
-    fun getEntertainmentNews(@Body jsonObject: JsonObject): Call<ResponseNewsData>
+    fun getEntertainmentNews(): Call<ResponseNewsData>
 
     @GET("top-headlines?country=tw&category=health&apiKey=7b370eccef7d4eca8d6af86e3ad40ea5")
-    fun getHealthNews(@Body jsonObject: JsonObject): Call<ResponseNewsData>
+    fun getHealthNews(): Call<ResponseNewsData>
 
     @GET("top-headlines?country=tw&category=science&apiKey=7b370eccef7d4eca8d6af86e3ad40ea5")
-    fun getScienceNews(@Body jsonObject: JsonObject): Call<ResponseNewsData>
+    fun getScienceNews(): Call<ResponseNewsData>
 
     @GET("top-headlines?country=tw&category=sports&apiKey=7b370eccef7d4eca8d6af86e3ad40ea5")
-    fun getSportsNews(@Body jsonObject: JsonObject): Call<ResponseNewsData>
+    fun getSportsNews(): Call<ResponseNewsData>
 
     @GET("top-headlines?country=tw&category=technology&apiKey=7b370eccef7d4eca8d6af86e3ad40ea5")
-    fun getTechnologyNews(@Body jsonObject: JsonObject): Call<ResponseNewsData>
+    fun getTechnologyNews(): Call<ResponseNewsData>
 
 }

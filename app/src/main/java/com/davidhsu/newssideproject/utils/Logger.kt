@@ -19,7 +19,7 @@ object LogUtil {
             append("[")
             append(methodName)
             append(":")
-            append(lineNumber)
+            append("line $lineNumber")
             append("]")
             append(log)
         }

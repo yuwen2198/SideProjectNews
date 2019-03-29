@@ -23,44 +23,44 @@ class ApiComponent {
     var newsApi : NewsApi = RetrofitComponent.getInstance().create(NewsApi::class.java)
 
     @Synchronized
-    fun getCompositeNewsInfo(@NonNull jsonObject: JsonObject, @NonNull httpCallBack: HttpCallBack) {
-        val call = newsApi.getCompositeNews(jsonObject)
+    fun getCompositeNewsInfo(@NonNull httpCallBack: HttpCallBack) {
+        val call = newsApi.getCompositeNews()
         callApi(call,httpCallBack)
     }
 
     @Synchronized
-    fun getBusinessNewsInfo(@NonNull jsonObject: JsonObject, @NonNull httpCallBack: HttpCallBack) {
-        val call = newsApi.getBusinessNews(jsonObject)
+    fun getBusinessNewsInfo(@NonNull httpCallBack: HttpCallBack) {
+        val call = newsApi.getBusinessNews()
         callApi(call,httpCallBack)
     }
 
     @Synchronized
-    fun getEntertainmentNewsInfo(@NonNull jsonObject: JsonObject, @NonNull httpCallBack: HttpCallBack) {
-        val call = newsApi.getEntertainmentNews(jsonObject)
+    fun getEntertainmentNewsInfo(@NonNull httpCallBack: HttpCallBack) {
+        val call = newsApi.getEntertainmentNews()
         callApi(call,httpCallBack)
     }
 
     @Synchronized
-    fun getHealthNewsInfo(@NonNull jsonObject: JsonObject, @NonNull httpCallBack: HttpCallBack) {
-        val call = newsApi.getHealthNews(jsonObject)
+    fun getHealthNewsInfo(@NonNull httpCallBack: HttpCallBack) {
+        val call = newsApi.getHealthNews()
         callApi(call,httpCallBack)
     }
 
     @Synchronized
-    fun getScienceNewsInfo(@NonNull jsonObject: JsonObject, @NonNull httpCallBack: HttpCallBack) {
-        val call = newsApi.getScienceNews(jsonObject)
+    fun getScienceNewsInfo(@NonNull httpCallBack: HttpCallBack) {
+        val call = newsApi.getScienceNews()
         callApi(call,httpCallBack)
     }
 
     @Synchronized
-    fun getESportsNewsInfo(@NonNull jsonObject: JsonObject, @NonNull httpCallBack: HttpCallBack) {
-        val call = newsApi.getSportsNews(jsonObject)
+    fun getESportsNewsInfo(@NonNull httpCallBack: HttpCallBack) {
+        val call = newsApi.getSportsNews()
         callApi(call,httpCallBack)
     }
 
     @Synchronized
-    fun getTechnologyNewsInfo(@NonNull jsonObject: JsonObject, @NonNull httpCallBack: HttpCallBack) {
-        val call = newsApi.getTechnologyNews(jsonObject)
+    fun getTechnologyNewsInfo(@NonNull httpCallBack: HttpCallBack) {
+        val call = newsApi.getTechnologyNews()
         callApi(call,httpCallBack)
     }
 
