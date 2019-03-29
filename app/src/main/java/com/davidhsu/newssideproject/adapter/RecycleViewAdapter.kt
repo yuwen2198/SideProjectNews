@@ -11,22 +11,49 @@ import com.bumptech.glide.Glide
 import com.davidhsu.newssideproject.R
 import com.davidhsu.newssideproject.api.model.Article
 import com.davidhsu.newssideproject.utils.LogUtil
-import kotlinx.android.synthetic.main.item_recycleview.view.*
+import kotlinx.android.synthetic.main.recycleview_news_item.view.*
 
 /**
  *
  * @author : DavidHsu on 2019/03/28
  *
  */
-class RecycleViewAdapter(private var items: List<Article>?, private val context: FragmentActivity?) : RecyclerView.Adapter<RecycleViewViewHolder>() {
+class RecycleViewAdapter(private var items: List<Article>?, private val context: FragmentActivity?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecycleViewViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.item_recycleview, parent, false)
-        return RecycleViewViewHolder(view)
+    companion object {
+        const val HEADER_TYPE = 0
+        const val NEWS_TYPE = 1
+
+        const val HEADER_COUNT = 1
     }
 
-    override fun onBindViewHolder(holder: RecycleViewViewHolder, position: Int) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+
+        return if (viewType == NEWS_TYPE) {
+            val view = layoutInflater.inflate(R.layout.recycleview_news_item, parent, false)
+            RecycleViewViewHolder(view)
+        } else {
+            val view = layoutInflater.inflate(R.layout.recycleview_header, parent, false)
+            HeaderViewHolder(view)
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is RecycleViewViewHolder) {
+            newsView(holder , position - 1)
+        } else {
+
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int = if (position == 0) {
+        HEADER_TYPE
+    } else {
+        NEWS_TYPE
+    }
+
+    private fun newsView(holder: RecycleViewViewHolder, position: Int) {
         val data = items!![position]
 
         val title = data.author
@@ -52,7 +79,7 @@ class RecycleViewAdapter(private var items: List<Article>?, private val context:
         context!!.startActivity(intent)
     }
 
-    override fun getItemCount(): Int = items!!.size
+    override fun getItemCount(): Int = items!!.size + HEADER_COUNT
 
     fun setData (data: List<Article>) {
         items = data
@@ -71,3 +98,5 @@ class RecycleViewViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     val rootView = view.newsRootView!!
 
 }
+
+class HeaderViewHolder (view: View) : RecyclerView.ViewHolder(view)
