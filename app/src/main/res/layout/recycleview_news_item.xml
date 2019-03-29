@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:id="@+id/cv_item"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="4dp"
+        card_view:cardBackgroundColor="@color/defult_background">
+
+    <android.support.constraint.ConstraintLayout
+            android:id="@+id/newsRootView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/news_form"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                tools:text="來自"
+                />
+
+        <TextView
+                android:id="@+id/new_content"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:singleLine="false"
+                android:layout_marginTop="8dp"
+                card_view:layout_constraintStart_toStartOf="@+id/news_form"
+                card_view:layout_constraintTop_toBottomOf="@+id/news_form"
+                tools:text="內容"
+                card_view:layout_constraintBottom_toTopOf="@+id/news_publishedAt"
+                />
+
+        <ImageView
+                android:id="@+id/news_img"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                tools:src="@drawable/ic_sun"
+                android:layout_marginEnd="16dp"
+                card_view:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+                android:id="@+id/news_publishedAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:layout_marginBottom="8dp"
+                card_view:layout_constraintStart_toStartOf="@+id/new_content"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                tools:text="發布時間"
+                card_view:layout_constraintTop_toBottomOf="@+id/new_content"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</android.support.v7.widget.CardView>
