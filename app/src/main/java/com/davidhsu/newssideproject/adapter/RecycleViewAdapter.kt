@@ -1,5 +1,7 @@
 package com.davidhsu.newssideproject.adapter
 
+import android.content.Intent
+import android.net.Uri
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -38,13 +40,20 @@ class RecycleViewAdapter(private val items: List<Article>?, private val context:
         }
 
         val imgUrl = data.urlToImage
-//        Glide.with(context!!).load(imgUrl).fitCenter().into(holder.imgNews)
-        Glide.with(context!!).load(imgUrl).centerCrop().fitCenter().into(holder.imgNews)
+        Glide.with(context!!).load(imgUrl).into(holder.imgNews)
 
         holder.tvNewsContent.text = data.title
 
         holder.tvPublishAt.text = data.publishedAt
         LogUtil.d("onBindViewHolder")
+
+        holder.rootView.setOnClickListener { intentNews(data) }
+    }
+
+    private fun intentNews(data : Article) {
+        val uri = Uri.parse(data.url)
+        val intent = Intent(Intent.ACTION_VIEW,uri)
+        context!!.startActivity(intent)
     }
 
     override fun getItemCount(): Int {
@@ -66,5 +75,6 @@ class RecycleViewViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     val tvNewsContent = view.new_content!!
     val imgNews = view.news_img!!
     val tvPublishAt = view.news_publishedAt!!
+    val rootView = view.newsRootView!!
 
 }
