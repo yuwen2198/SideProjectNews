@@ -4,7 +4,6 @@ import android.support.annotation.NonNull
 import com.davidhsu.newssideproject.callback.HttpCallBack
 import com.davidhsu.newssideproject.utils.LogUtil
 import com.davidhsu.newssideproject.api.model.ResponseNewsData
-import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,49 +17,50 @@ class ApiComponent {
 
     companion object {
         const val responseSuccess = "ok"
+        const val newsApiKey = "7b370eccef7d4eca8d6af86e3ad40ea5"
     }
 
     var newsApi : NewsApi = RetrofitComponent.getInstance().create(NewsApi::class.java)
 
     @Synchronized
     fun getCompositeNewsInfo(@NonNull httpCallBack: HttpCallBack) {
-        val call = newsApi.getCompositeNews()
+        val call = newsApi.getCompositeNews("tw",newsApiKey)
         callApi(call,httpCallBack)
     }
 
     @Synchronized
     fun getBusinessNewsInfo(@NonNull httpCallBack: HttpCallBack) {
-        val call = newsApi.getBusinessNews()
+        val call = newsApi.getCategoryNews("tw","business",newsApiKey)
         callApi(call,httpCallBack)
     }
 
     @Synchronized
     fun getEntertainmentNewsInfo(@NonNull httpCallBack: HttpCallBack) {
-        val call = newsApi.getEntertainmentNews()
+        val call = newsApi.getCategoryNews("tw","entertainment",newsApiKey)
         callApi(call,httpCallBack)
     }
 
     @Synchronized
     fun getHealthNewsInfo(@NonNull httpCallBack: HttpCallBack) {
-        val call = newsApi.getHealthNews()
+        val call = newsApi.getCategoryNews("tw","health",newsApiKey)
         callApi(call,httpCallBack)
     }
 
     @Synchronized
     fun getScienceNewsInfo(@NonNull httpCallBack: HttpCallBack) {
-        val call = newsApi.getScienceNews()
+        val call = newsApi.getCategoryNews("tw","science",newsApiKey)
         callApi(call,httpCallBack)
     }
 
     @Synchronized
     fun getESportsNewsInfo(@NonNull httpCallBack: HttpCallBack) {
-        val call = newsApi.getSportsNews()
+        val call = newsApi.getCategoryNews("tw","sports",newsApiKey)
         callApi(call,httpCallBack)
     }
 
     @Synchronized
     fun getTechnologyNewsInfo(@NonNull httpCallBack: HttpCallBack) {
-        val call = newsApi.getTechnologyNews()
+        val call = newsApi.getCategoryNews("tw","technology",newsApiKey)
         callApi(call,httpCallBack)
     }
 

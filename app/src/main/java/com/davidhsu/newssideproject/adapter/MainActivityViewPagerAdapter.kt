@@ -13,15 +13,11 @@ class MainActivityViewPagerAdapter(fragmentManager: FragmentManager) : FragmentP
 
     private val fragments = ArrayList<Fragment>()
 
-    override fun getItem(position: Int): Fragment {
-        return fragments[position]
-    }
+    override fun getItem(position: Int): Fragment = fragments[position]
 
-    override fun getCount(): Int {
-        return fragments.size
-    }
+    override fun getCount(): Int = fragments.size
 
-    fun addFragment(fragment: Fragment) {
-        fragments.add(fragment)
+    fun addFragment(fragment: Fragment) = fragments.run{
+        add(fragment)
     }
 }
