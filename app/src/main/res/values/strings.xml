@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">NewsSideProject</string>
+    <string name="lazy_news">懶人新聞</string>
     <string name="action_settings">Settings</string>
 
     <string name="title_news">新聞</string>
     <string name="title_weather">氣象</string>
     <string name="title_about">關於</string>
+
+    <string name="loading">請稍後</string>
 </resources>
