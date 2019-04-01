@@ -5,7 +5,6 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import android.view.Window
 import android.view.WindowManager
 import com.davidhsu.newssideproject.R
 import com.davidhsu.newssideproject.adapter.MainActivityViewPagerAdapter
@@ -42,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         adapter.addFragment(WeatherFragment())
         adapter.addFragment(AboutFragment())
         viewpager.adapter = adapter
+        viewpager.offscreenPageLimit = adapter.count
     }
 
     private fun initListener() {

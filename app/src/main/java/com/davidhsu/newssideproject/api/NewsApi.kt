@@ -5,6 +5,8 @@ import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  *
@@ -13,25 +15,10 @@ import retrofit2.http.GET
  */
 interface NewsApi {
 
-    @GET("top-headlines?country=tw&apiKey=7b370eccef7d4eca8d6af86e3ad40ea5")
-    fun getCompositeNews(): Call<ResponseNewsData>
+    @GET("top-headlines")
+    fun getCompositeNews(@Query("country") country: String,@Query("apiKey") apiKey: String): Call<ResponseNewsData>
 
-    @GET("top-headlines?country=tw&category=business&apiKey=7b370eccef7d4eca8d6af86e3ad40ea5")
-    fun getBusinessNews(): Call<ResponseNewsData>
-
-    @GET("top-headlines?country=tw&category=entertainment&apiKey=7b370eccef7d4eca8d6af86e3ad40ea5")
-    fun getEntertainmentNews(): Call<ResponseNewsData>
-
-    @GET("top-headlines?country=tw&category=health&apiKey=7b370eccef7d4eca8d6af86e3ad40ea5")
-    fun getHealthNews(): Call<ResponseNewsData>
-
-    @GET("top-headlines?country=tw&category=science&apiKey=7b370eccef7d4eca8d6af86e3ad40ea5")
-    fun getScienceNews(): Call<ResponseNewsData>
-
-    @GET("top-headlines?country=tw&category=sports&apiKey=7b370eccef7d4eca8d6af86e3ad40ea5")
-    fun getSportsNews(): Call<ResponseNewsData>
-
-    @GET("top-headlines?country=tw&category=technology&apiKey=7b370eccef7d4eca8d6af86e3ad40ea5")
-    fun getTechnologyNews(): Call<ResponseNewsData>
+    @GET("top-headlines")
+    fun getCategoryNews(@Query("country") country: String, @Query("category") category: String, @Query("apiKey") apiKey: String): Call<ResponseNewsData>
 
 }
