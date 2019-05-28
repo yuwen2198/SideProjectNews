@@ -19,8 +19,6 @@ import com.davidhsu.newssideproject.view.fragment.NewsFragment
 
 class SplashActivity : BaseActivity() {
 
-    private var data : List<Article> = ArrayList()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar!!.hide()
@@ -41,29 +39,6 @@ class SplashActivity : BaseActivity() {
             finish()
 
         }, 3000)
-
-    }
-
-    private fun callApi(){
-
-        val apiComponent = ApiComponent()
-        apiComponent.getCompositeNewsInfo(object  : HttpCallBack {
-            override fun onSuccess(responseNewsData: ResponseNewsData) {
-
-                if (responseNewsData.status == NewsFragment.responseStatus) {
-                    data =  responseNewsData.articles
-//                    adapter.setData(data)
-                    LogUtil.d("Success , data size = ${data.size}")
-                } else {
-                    LogUtil.e("Success , status != ok && status = ${data.size}")
-                }
-            }
-
-            override fun onFail(failReason: String) {
-                LogUtil.e("error , failReason : $failReason")
-            }
-
-        })
 
     }
 

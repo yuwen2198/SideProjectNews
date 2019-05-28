@@ -36,9 +36,11 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initViewPager() {
-        adapter.addFragment(NewsFragment())
-        adapter.addFragment(WeatherFragment())
-        adapter.addFragment(AboutFragment())
+        adapter.apply {
+            addFragment(NewsFragment())
+            addFragment(WeatherFragment())
+            addFragment(AboutFragment())
+        }
         viewpager.adapter = adapter
         viewpager.offscreenPageLimit = adapter.count
     }
@@ -64,8 +66,7 @@ class MainActivity : BaseActivity() {
     })
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        val itemID = item.itemId
-        when (itemID) {
+        when (item.itemId) {
             R.id.navigation_home -> {
                 viewpager.currentItem = 0
                 return@OnNavigationItemSelectedListener true

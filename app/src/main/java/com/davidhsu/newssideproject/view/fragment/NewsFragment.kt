@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.davidhsu.newssideproject.R
 import com.davidhsu.newssideproject.adapter.RecycleViewAdapter
-import com.davidhsu.newssideproject.api.ApiComponent
 import com.davidhsu.newssideproject.api.NewsApi
 import com.davidhsu.newssideproject.api.RetrofitComponent
 import com.davidhsu.newssideproject.api.model.Article
@@ -21,6 +20,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_news.view.*
 import io.reactivex.disposables.Disposable
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 /**
  *
@@ -31,6 +33,9 @@ class NewsFragment : Fragment() {
 
     companion object {
         const val responseStatus = "ok"
+
+        const val responseSuccess = "ok"
+        const val newsApiKey = "7b370eccef7d4eca8d6af86e3ad40ea5"
     }
 
     private var data : List<Article> = ArrayList()
@@ -58,46 +63,51 @@ class NewsFragment : Fragment() {
 
     private fun initData() {
 
+        val newsApi : NewsApi = RetrofitComponent.getInstance().create(NewsApi::class.java)
+
         //retrofit
-//        val apiComponent = ApiComponent()
-//        apiComponent.getCompositeNewsInfo(object  : HttpCallBack{
-//            override fun onSuccess(responseNewsData: ResponseNewsData) {
+        newsApi.getCompositeNews("tw",newsApiKey).enqueue(object : Callback<ResponseNewsData> {
+            override fun onFailure(call: Call<ResponseNewsData>, t: Throwable) {
+                LogUtil.e("error , failReason : ${t.message}")
+            }
+
+            override fun onResponse(call: Call<ResponseNewsData>, response: Response<ResponseNewsData>) {
+
+                val body = response.body()
+                body?.let { ResponseNewsData ->
+                    if (ResponseNewsData.status == responseStatus) {
+                        data =  ResponseNewsData.articles
+                        adapter.setData(data)
+                        LogUtil.d("Success , data size = ${data.size}")
+                    } else {
+                        LogUtil.e("Success , status != ok && status = ${data.size}")
+                    }
+                }
+
+            }
+
+        })
+
+        // RxJava + retrofit
+//        disposable = newsApi.getCompositeNewsWithRx("tw", newsApiKey)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe ({ responseData ->
 //
-//                if (responseNewsData.status == responseStatus) {
-//                    data =  responseNewsData.articles
+//                if (responseData.status == responseStatus) {
+//                    data =  responseData.articles
 //                    adapter.setData(data)
 //                    LogUtil.d("Success , data size = ${data.size}")
 //                } else {
 //                    LogUtil.e("Success , status != ok && status = ${data.size}")
 //                }
-//            }
 //
-//            override fun onFail(failReason: String) {
-//                LogUtil.e("error , failReason : $failReason")
-//            }
+//            } ,{ error ->
+//                LogUtil.e("error , failReason : $error")
 //
-//        })
-
-        // RxJava + retrofit
-        val newsApi = RetrofitComponent.getInstance().create(NewsApi::class.java)
-        disposable = newsApi.getCompositeNewsWithRx("tw", ApiComponent.newsApiKey)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe ({ responseData ->
-
-                if (responseData.status == responseStatus) {
-                    data =  responseData.articles
-                    adapter.setData(data)
-                    LogUtil.d("Success , data size = ${data.size}")
-                } else {
-                    LogUtil.e("Success , status != ok && status = ${data.size}")
-                }
-
-            } ,{ error ->
-                LogUtil.e("error , failReason : $error")
-            },{
-                Toast.makeText(activity,"on finish",Toast.LENGTH_SHORT).show()
-            })
+//            },{
+//                Toast.makeText(activity,"on finish",Toast.LENGTH_SHORT).show()
+//            })
 
     }
 
