@@ -17,7 +17,7 @@ class MainActivityViewPagerAdapter(fragmentManager: FragmentManager) : FragmentP
 
     override fun getCount(): Int = fragments.size
 
-    fun addFragment(fragment: Fragment) = fragments.run{
+    fun addFragment(fragment: Fragment) = fragments.apply{
         add(fragment)
     }
 }

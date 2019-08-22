@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.recycleview_news_item.view.*
  * @author : DavidHsu on 2019/03/28
  *
  */
-class RecycleViewAdapter(private var items: List<Article>?, private val context: FragmentActivity?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecycleViewAdapter(private var items: List<Article>, private val context: FragmentActivity?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val HEADER_TYPE = 0
@@ -43,7 +43,7 @@ class RecycleViewAdapter(private var items: List<Article>?, private val context:
         if (holder is RecycleViewViewHolder) {
             newsView(holder , position - 1)
         } else {
-
+            //TODO HEADER
         }
     }
 
@@ -54,49 +54,36 @@ class RecycleViewAdapter(private var items: List<Article>?, private val context:
     }
 
     private fun newsView(holder: RecycleViewViewHolder, position: Int) {
-        val data = items!![position]
+        val data = items[position]
 
         val title = data.author
         if (title.isNullOrEmpty()){
-            holder.tvNewsForm.text = "無"
+            holder.itemView.news_form.text = "無"
         } else {
-            holder.tvNewsForm.text = title
+            holder.itemView.news_form.text = title
         }
 
         val imgUrl = data.urlToImage
-        Glide.with(context!!).load(imgUrl).centerCrop().fitCenter().into(holder.imgNews)
+        Glide.with(context!!).load(imgUrl).centerCrop().fitCenter().into(holder.itemView.news_img)
 
-        holder.tvNewsContent.text = data.title
-
-        holder.tvPublishAt.text = data.publishedAt
-
-        holder.rootView.setOnClickListener { intentNews(data) }
+        holder.itemView.new_content.text = data.title
+        holder.itemView.news_publishedAt.text = data.publishedAt
+        holder.itemView.newsRootView.setOnClickListener { intentNews(data) }
     }
 
     private fun intentNews(data : Article) {
         val uri = Uri.parse(data.url)
-        val intent = Intent(Intent.ACTION_VIEW,uri)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
         context!!.startActivity(intent)
     }
 
-    override fun getItemCount(): Int = items!!.size + HEADER_COUNT
+    override fun getItemCount(): Int = items.size + HEADER_COUNT
 
     fun setData (data: List<Article>) {
         items = data
         notifyDataSetChanged()
-        LogUtil.d("data = $data")
     }
 
+    inner class RecycleViewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class HeaderViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView)
 }
-
-class RecycleViewViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-
-    val tvNewsForm = view.news_form!!
-    val tvNewsContent = view.new_content!!
-    val imgNews = view.news_img!!
-    val tvPublishAt = view.news_publishedAt!!
-    val rootView = view.newsRootView!!
-
-}
-
-class HeaderViewHolder (view: View) : RecyclerView.ViewHolder(view)

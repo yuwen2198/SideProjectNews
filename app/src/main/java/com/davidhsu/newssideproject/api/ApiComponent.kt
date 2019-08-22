@@ -73,7 +73,6 @@ class ApiComponent {
             }
 
             override fun onResponse(call : Call<ResponseNewsData>, response : Response<ResponseNewsData>) {
-
                 if (response.isSuccessful) {
                     val responseNewsData = response.body()
                     responseNewsData?.let{

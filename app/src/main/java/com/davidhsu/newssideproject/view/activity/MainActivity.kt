@@ -41,6 +41,7 @@ class MainActivity : BaseActivity() {
             addFragment(WeatherFragment())
             addFragment(AboutFragment())
         }
+
         viewpager.adapter = adapter
         viewpager.offscreenPageLimit = adapter.count
     }
