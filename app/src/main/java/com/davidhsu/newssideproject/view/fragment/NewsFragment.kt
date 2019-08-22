@@ -1,5 +1,7 @@
 package com.davidhsu.newssideproject.view.fragment
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.annotation.Nullable
 import android.support.v4.app.Fragment
@@ -15,13 +17,9 @@ import com.davidhsu.newssideproject.api.RetrofitComponent
 import com.davidhsu.newssideproject.api.model.Article
 import com.davidhsu.newssideproject.api.model.ResponseNewsData
 import com.davidhsu.newssideproject.utils.LogUtil
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.davidhsu.newssideproject.viewmodel.NewsFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_news.view.*
 import io.reactivex.disposables.Disposable
-import kotlinx.coroutines.*
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
 /**
@@ -33,20 +31,24 @@ class NewsFragment : Fragment() {
 
     companion object {
         const val responseSuccess = "ok"
-        const val newsApiKey = "7b370eccef7d4eca8d6af86e3ad40ea5"
     }
 
-    private var data : List<Article> = ArrayList()
+    private var data: List<Article> = ArrayList()
+    private var disposable: Disposable? = null
 
-    private var disposable : Disposable? = null
-
-    private val adapter : RecycleViewAdapter by lazy {
-        RecycleViewAdapter(data,activity)
+    private val adapter: RecycleViewAdapter by lazy {
+        RecycleViewAdapter(data, activity)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initData()
+    private val viewModel by lazy {
+        ViewModelProviders.of(this).get(NewsFragmentViewModel::class.java)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val newsApi = RetrofitComponent.getInstance().create(NewsApi::class.java)
+        viewModel.getDataWithCoroutine(newsApi)
+        setUpObserver()
     }
 
     @Nullable
@@ -57,45 +59,39 @@ class NewsFragment : Fragment() {
         }
     }
 
-    private fun initData() {
-        val newsApi = RetrofitComponent.getInstance().create(NewsApi::class.java)
-        initDataWithCoroutine(newsApi)
-    }
+    private fun setUpObserver() {
+        viewModel.dataWithCoroutine.observe(this, Observer { response ->
+            handleSuccessResponse(response)
+        })
 
-    /**
-     * retrofit
-     */
-    private fun initDataWithRetrofit(newsApi: NewsApi) {
-        newsApi.getCompositeNews("tw",newsApiKey).enqueue(object : Callback<ResponseNewsData> {
-            override fun onFailure(call: Call<ResponseNewsData>, t: Throwable) {
-                LogUtil.e("error , failReason : ${t.message}")
+        viewModel.dataWithCoroutineFail.observe(this, Observer { exception ->
+            exception?.let {
+                Toast.makeText(activity,"Exception = ${exception.message}",Toast.LENGTH_SHORT).show()
+                LogUtil.e("error , Exception = ${exception.message}")
             }
+        })
 
-            override fun onResponse(call: Call<ResponseNewsData>, response: Response<ResponseNewsData>) {
-
-                val body = response.body()
-                body?.let { ResponseNewsData ->
-                    if (ResponseNewsData.status == responseSuccess) {
-                        data =  ResponseNewsData.articles
-                        adapter.setData(data)
-                        LogUtil.d("Success , data size = ${data.size}")
-                    } else {
-                        LogUtil.e("Success , status != ok && status = ${data.size}")
-                    }
+        viewModel.dataWithRetrofit.observe(this, Observer { response ->
+            val body = response?.body()
+            body?.let { ResponseNewsData ->
+                if (ResponseNewsData.status == responseSuccess) {
+                    data =  ResponseNewsData.articles
+                    adapter.setData(data)
+                    LogUtil.d("Success , data size = ${data.size}")
+                } else {
+                    LogUtil.e("Success , status != ok && status = ${data.size}")
                 }
             }
         })
-    }
 
-    /**
-     * RxJava + retrofit
-     */
-    private fun initDataWithRXAndRetrofit(newsApi: NewsApi) {
-        disposable = newsApi.getCompositeNewsWithRx("tw", newsApiKey)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe ({ responseData ->
+        viewModel.dataWithRetrofitFail.observe(this, Observer { throwable ->
+            throwable?.let {
+                LogUtil.e("error , failReason : ${throwable.message}")
+            }
+        })
 
+        viewModel.dataWithRXAndRetrofit.observe(this, Observer { responseData ->
+            responseData?.let {
                 if (responseData.status == responseSuccess) {
                     data =  responseData.articles
                     adapter.setData(data)
@@ -103,49 +99,33 @@ class NewsFragment : Fragment() {
                 } else {
                     LogUtil.e("Success , status != ok && status = ${data.size}")
                 }
-
-            } ,{ error ->
-                LogUtil.e("error , failReason : $error")
-
-            },{
-                Toast.makeText(activity,"on finish",Toast.LENGTH_SHORT).show()
-            })
-    }
-
-    /**
-     * globalScope.join() should be called in suspend function
-     * globalScope.start() anyWhere
-     */
-    private fun initDataWithCoroutine(newsApi: NewsApi) {
-        GlobalScope.launch(Dispatchers.Main){
-            try {
-                val response  = newsApi.getCompositeNewsWithCorutine("tw",newsApiKey).await()
-                handleSuccessResponse(response)
-            } catch (e: Exception) {
-                Toast.makeText(activity,"Exception = ${e.message}",Toast.LENGTH_SHORT).show()
-                LogUtil.e("error , Exception = ${e.message}")
             }
-        }
-    }
+        })
 
-    /**
-     * Coroutine suspend (not success , )
-     */
-    private fun initDataWithCoroutineSuspend(newsApi: NewsApi) {
-        //Coroutine suspend (not success , )
-        GlobalScope.launch(Dispatchers.Main){
-            try {
-                val response  = newsApi.getCompositeNewsWithSuspend("tw",newsApiKey)
+        viewModel.dataWithRXAndRetrofitFail.observe(this, Observer { error ->
+            LogUtil.e("error , failReason : $error")
+        })
+
+        viewModel.dataWithRXAndRetrofitFinish.observe(this, Observer {
+            Toast.makeText(activity,"on finish",Toast.LENGTH_SHORT).show()
+        })
+
+        viewModel.dataWithCoroutineSuspend.observe(this, Observer { response ->
+            response?.let {
                 handleSuccessResponseWithSuspend(response)
-            } catch (e: Exception) {
-                Toast.makeText(activity,"Exception = ${e.message}",Toast.LENGTH_SHORT).show()
-                LogUtil.e("error , Exception = ${e.message}")
             }
-        }
+        })
+
+        viewModel.dataWithCoroutineSuspendFail.observe(this, Observer { exception ->
+            exception?.let {
+                Toast.makeText(activity,"Exception = ${exception.message}",Toast.LENGTH_SHORT).show()
+                LogUtil.e("error , Exception = ${exception.message}")
+            }
+        })
     }
 
-    private fun handleSuccessResponse(response: Response<ResponseNewsData>) {
-        val body = response.body()
+    private fun handleSuccessResponse(response: Response<ResponseNewsData>?) {
+        val body = response?.body()
         body?.let {
             if (body.status == responseSuccess) {
                 data = body.articles
