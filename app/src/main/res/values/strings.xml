@@ -8,4 +8,11 @@
     <string name="title_about">關於</string>
 
     <string name="loading">請稍後</string>
+
+    <string name="facebook_app_id">452372332023988</string>
+    <string name="fb_login_protocol_scheme">fb452372332023988</string>
+
+    <string name="client_id">742371725520-k17opvfkbuoclcfpjcb5uvsk8rsdt0qs.apps.googleusercontent.com</string>
+
+
 </resources>

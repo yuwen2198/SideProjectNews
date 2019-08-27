@@ -32,6 +32,9 @@ dependencies {
 
     implementation 'com.android.support:cardview-v7:28.0.0'
 
+    //FB
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation "com.squareup.retrofit2:converter-gson:2.4.0"
@@ -53,5 +56,8 @@ dependencies {
     //MVVM
     implementation "android.arch.lifecycle:extensions:1.1.1"
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+    //google
+    implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
 
 }
