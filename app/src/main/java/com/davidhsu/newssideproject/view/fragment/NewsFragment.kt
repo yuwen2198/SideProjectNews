@@ -36,12 +36,26 @@ class NewsFragment : Fragment() {
     private var data: List<Article> = ArrayList()
     private var disposable: Disposable? = null
 
+    private var userMail = ""
+    private var name = ""
+    private var photo = ""
+
     private val adapter: RecycleViewAdapter by lazy {
         RecycleViewAdapter(data, activity)
     }
 
     private val viewModel by lazy {
         ViewModelProviders.of(this).get(NewsFragmentViewModel::class.java)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (isAdded) {
+            userMail = arguments?.getString("email").toString()
+            name = arguments?.getString("name").toString()
+            photo = arguments?.getString("photoUrl").toString()
+            adapter.setUserInfo(userMail, name, photo)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
