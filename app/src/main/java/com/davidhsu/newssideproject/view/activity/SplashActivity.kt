@@ -67,12 +67,13 @@ class SplashActivity : BaseActivity() {
                     accessToken
                 ) { `object`, response ->
                     val fbId = `object`.getString("id")
+                    val fbMail = `object`.getString("email")
                     val fbToken = loginResult.accessToken.token
                     val fbName = `object`.getString("name")
                     val userProfilePicture = "https://graph.facebook.com/$fbId/picture?type=large"
-                    LogUtil.d("Facebook id = $fbId , Facebook token = $fbToken , Facebook name = $fbName ")
+                    LogUtil.d("Facebook mail = $fbMail , Facebook token = $fbToken , Facebook name = $fbName ")
 
-                    intentToMainActivity(fbName, fbId, userProfilePicture)
+                    intentToMainActivity(fbName, fbMail, userProfilePicture)
                 }
 
                 val parameters = Bundle()
@@ -92,11 +93,11 @@ class SplashActivity : BaseActivity() {
         })
     }
 
-    private fun intentToMainActivity(name: String?, id: String?, userProfilePicture: String?) {
+    private fun intentToMainActivity(name: String?, email: String?, userProfilePicture: String?) {
         val intent = Intent(this,MainActivity::class.java).apply {
             putExtra("name", name)
-            putExtra("id", id)
-            putExtra("photo", userProfilePicture)
+            putExtra("email", email)
+            putExtra("photoUrl", userProfilePicture)
         }
         startActivity(intent)
         finish()
@@ -110,8 +111,8 @@ class SplashActivity : BaseActivity() {
                 LogUtil.d("Google SDK login success !!")
                 val acct = GoogleSignIn.getLastSignedInAccount(baseContext)
                 acct?.let {
-                    intentToMainActivity(acct.givenName, acct.id, acct.photoUrl.toString())
-                    LogUtil.d("Google name = ${acct.givenName} , Google id = ${acct.id} , Google photo = ${acct.photoUrl.toString()}")
+                    intentToMainActivity(acct.givenName, acct.email, acct.photoUrl.toString())
+                    LogUtil.d("Google name = ${acct.givenName} , Google mail = ${acct.email} , Google photo = ${acct.photoUrl.toString()}")
                 } ?: run {
                     LogUtil.e("Google SDK GoogleSignInAccount object is null and can't get info !!")
                 }

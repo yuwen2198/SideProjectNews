@@ -15,6 +15,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
+    private var userMail = ""
+    private var name = ""
+    private var photoUrl = ""
+
     private val adapter by lazy {
         MainActivityViewPagerAdapter(supportFragmentManager)
     }
@@ -24,9 +28,16 @@ class MainActivity : BaseActivity() {
         supportActionBar!!.hide()
         setContentView(R.layout.activity_main)
 
+        getIntentData()
         initStatusBar()
         initViewPager()
         initListener()
+    }
+
+    private fun getIntentData() {
+        userMail = intent.getStringExtra("email")
+        name = intent.getStringExtra("name")
+        photoUrl = intent.getStringExtra("photoUrl")
     }
 
     private fun initStatusBar() = window.run {
@@ -36,8 +47,16 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initViewPager() {
+
+        val bundle = Bundle()
+        bundle.putString("email", userMail)
+        bundle.putString("name", name)
+        bundle.putString("photoUrl", photoUrl)
+
         adapter.apply {
-            addFragment(NewsFragment())
+            val newsFragment = NewsFragment()
+            newsFragment.arguments = bundle
+            addFragment(newsFragment)
             addFragment(WeatherFragment())
             addFragment(AboutFragment())
         }

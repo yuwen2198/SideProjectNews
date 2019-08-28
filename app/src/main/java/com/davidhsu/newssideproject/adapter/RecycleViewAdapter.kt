@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.davidhsu.newssideproject.R
 import com.davidhsu.newssideproject.api.model.Article
-import com.davidhsu.newssideproject.utils.LogUtil
+import kotlinx.android.synthetic.main.recycleview_header.view.*
 import kotlinx.android.synthetic.main.recycleview_news_item.view.*
 
 /**
@@ -27,6 +27,10 @@ class RecycleViewAdapter(private var items: List<Article>, private val context: 
         const val HEADER_COUNT = 1
     }
 
+    private var userMail = ""
+    private var name = ""
+    private var photoUrl = ""
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
 
@@ -42,8 +46,8 @@ class RecycleViewAdapter(private var items: List<Article>, private val context: 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is RecycleViewViewHolder) {
             newsView(holder , position - 1)
-        } else {
-            //TODO HEADER
+        } else if (holder is HeaderViewHolder){
+            setHeaderView(holder)
         }
     }
 
@@ -51,6 +55,12 @@ class RecycleViewAdapter(private var items: List<Article>, private val context: 
         HEADER_TYPE
     } else {
         NEWS_TYPE
+    }
+
+    private fun setHeaderView(holder: HeaderViewHolder) {
+        holder.itemView.name.text = name
+        holder.itemView.idText.text = userMail
+        Glide.with(context).load(photoUrl).into(holder.itemView.profile_image)
     }
 
     private fun newsView(holder: RecycleViewViewHolder, position: Int) {
@@ -64,7 +74,7 @@ class RecycleViewAdapter(private var items: List<Article>, private val context: 
         }
 
         val imgUrl = data.urlToImage
-        Glide.with(context!!).load(imgUrl).centerCrop().fitCenter().into(holder.itemView.news_img)
+        Glide.with(context).load(imgUrl).centerCrop().fitCenter().into(holder.itemView.news_img)
 
         holder.itemView.new_content.text = data.title
         holder.itemView.news_publishedAt.text = data.publishedAt
@@ -81,6 +91,13 @@ class RecycleViewAdapter(private var items: List<Article>, private val context: 
 
     fun setData (data: List<Article>) {
         items = data
+        notifyDataSetChanged()
+    }
+
+    fun setUserInfo(userMail: String, name: String, photoUrl: String) {
+        this.userMail = userMail
+        this.name = name
+        this.photoUrl = photoUrl
         notifyDataSetChanged()
     }
 

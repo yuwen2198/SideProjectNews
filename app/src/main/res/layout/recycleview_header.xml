@@ -9,26 +9,62 @@
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="4dp"
-        card_view:cardBackgroundColor="#4CAF50">
+        card_view:cardBackgroundColor="@color/defult_background">
 
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:src="@drawable/ic_facebook"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
 
         <TextView
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Header"
+                android:text="name"
                 android:textSize="30sp"
-                android:textColor="#ffffff"
+                android:textColor="@color/white"
+                card_view:layout_constraintTop_toTopOf="@+id/profile_image"
+                card_view:layout_constraintStart_toEndOf="@+id/profile_image"
+                card_view:layout_constraintEnd_toStartOf="@+id/guideline"/>
+
+        <TextView
+                android:id="@+id/idText"
+                android:text="id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                card_view:layout_constraintBottom_toBottomOf="@+id/profile_image"
+                card_view:layout_constraintStart_toEndOf="@+id/profile_image"
+                android:layout_marginStart="24dp"
                 android:layout_marginEnd="8dp"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="8dp"
-                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintEnd_toStartOf="@+id/guideline"
                 android:layout_marginTop="8dp"
-                card_view:layout_constraintTop_toTopOf="parent"
-                android:layout_marginBottom="8dp"
-                card_view:layout_constraintBottom_toBottomOf="parent"/>
+                card_view:layout_constraintTop_toBottomOf="@+id/name"/>
+
+        <android.support.constraint.Guideline
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/guideline"
+                android:orientation="vertical"
+                card_view:layout_constraintGuide_percent="0.95"/>
 
     </android.support.constraint.ConstraintLayout>
 
