@@ -14,10 +14,13 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 object RetrofitComponent {
 
-    private const val BASE_URL = "https://newsapi.org/v2/"
-    private lateinit var retrofit: Retrofit
+    private const val NEWS_BASE_URL = "https://newsapi.org/v2/"
+    private const val WEATHER_BASE_URL = "https://opendata.cwb.gov.tw/api/v1/"
 
-    fun getInstance(): Retrofit {
+    private lateinit var NewsRetrofit: Retrofit
+    private lateinit var WeatherRetrofit: Retrofit
+
+    fun getNewsInstance(): Retrofit {
 
         val logging = HttpLoggingInterceptor()
         val httpClient = OkHttpClient.Builder()
@@ -25,15 +28,34 @@ object RetrofitComponent {
         logging.level = HttpLoggingInterceptor.Level.BODY
         httpClient.addInterceptor(logging)
 
-        retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+        NewsRetrofit = Retrofit.Builder()
+            .baseUrl(NEWS_BASE_URL)
             .client(httpClient.build())
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
 
-        return retrofit
+        return NewsRetrofit
+    }
+
+    fun getWeatherInstance(): Retrofit {
+
+        val logging = HttpLoggingInterceptor()
+        val httpClient = OkHttpClient.Builder()
+
+        logging.level = HttpLoggingInterceptor.Level.BODY
+        httpClient.addInterceptor(logging)
+
+        WeatherRetrofit = Retrofit.Builder()
+            .baseUrl(WEATHER_BASE_URL)
+            .client(httpClient.build())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .build()
+
+        return WeatherRetrofit
     }
 
 }

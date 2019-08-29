@@ -11,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.davidhsu.newssideproject.R
-import com.davidhsu.newssideproject.adapter.RecycleViewAdapter
+import com.davidhsu.newssideproject.adapter.NewsRecycleViewAdapter
 import com.davidhsu.newssideproject.api.NewsApi
 import com.davidhsu.newssideproject.api.RetrofitComponent
 import com.davidhsu.newssideproject.api.model.Article
@@ -40,8 +40,8 @@ class NewsFragment : Fragment() {
     private var name = ""
     private var photo = ""
 
-    private val adapter: RecycleViewAdapter by lazy {
-        RecycleViewAdapter(data, activity)
+    private val adapterNews: NewsRecycleViewAdapter by lazy {
+        NewsRecycleViewAdapter(data, activity)
     }
 
     private val viewModel by lazy {
@@ -54,13 +54,13 @@ class NewsFragment : Fragment() {
             userMail = arguments?.getString("email").toString()
             name = arguments?.getString("name").toString()
             photo = arguments?.getString("photoUrl").toString()
-            adapter.setUserInfo(userMail, name, photo)
+            adapterNews.setUserInfo(userMail, name, photo)
         }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val newsApi = RetrofitComponent.getInstance().create(NewsApi::class.java)
+        val newsApi = RetrofitComponent.getNewsInstance().create(NewsApi::class.java)
         viewModel.getDataWithCoroutine(newsApi)
         setUpObserver()
     }
@@ -69,7 +69,7 @@ class NewsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, @Nullable container: ViewGroup?, @Nullable savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_news, container, false).apply {
             newsRV.layoutManager = LinearLayoutManager(activity)
-            newsRV.adapter = adapter
+            newsRV.adapter = adapterNews
         }
     }
 
@@ -90,7 +90,7 @@ class NewsFragment : Fragment() {
             body?.let { ResponseNewsData ->
                 if (ResponseNewsData.status == responseSuccess) {
                     data =  ResponseNewsData.articles
-                    adapter.setData(data)
+                    adapterNews.setData(data)
                     LogUtil.d("Success , data size = ${data.size}")
                 } else {
                     LogUtil.e("Success , status != ok && status = ${data.size}")
@@ -108,7 +108,7 @@ class NewsFragment : Fragment() {
             responseData?.let {
                 if (responseData.status == responseSuccess) {
                     data =  responseData.articles
-                    adapter.setData(data)
+                    adapterNews.setData(data)
                     LogUtil.d("Success , data size = ${data.size}")
                 } else {
                     LogUtil.e("Success , status != ok && status = ${data.size}")
@@ -143,7 +143,7 @@ class NewsFragment : Fragment() {
         body?.let {
             if (body.status == responseSuccess) {
                 data = body.articles
-                adapter.setData(data)
+                adapterNews.setData(data)
                 LogUtil.d("Success , data size = ${data.size}")
             } else {
                 LogUtil.e("Success , status != ok && status = ${data.size}")
@@ -155,7 +155,7 @@ class NewsFragment : Fragment() {
         response.let {
             if (response.status == responseSuccess) {
                 data = response.articles
-                adapter.setData(data)
+                adapterNews.setData(data)
                 LogUtil.d("Success , data size = ${data.size}")
             } else {
                 LogUtil.e("Success , status != ok && status = ${data.size}")

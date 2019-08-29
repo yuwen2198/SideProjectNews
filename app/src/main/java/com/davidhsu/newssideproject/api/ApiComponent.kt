@@ -20,7 +20,7 @@ class ApiComponent {
         const val newsApiKey = "7b370eccef7d4eca8d6af86e3ad40ea5"
     }
 
-    var newsApi : NewsApi = RetrofitComponent.getInstance().create(NewsApi::class.java)
+    var newsApi : NewsApi = RetrofitComponent.getNewsInstance().create(NewsApi::class.java)
 
     @Synchronized
     fun getCompositeNewsInfo(@NonNull httpCallBack: HttpCallBack) {

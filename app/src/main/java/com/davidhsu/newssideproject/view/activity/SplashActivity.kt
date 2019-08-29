@@ -1,5 +1,6 @@
 package com.davidhsu.newssideproject.view.activity
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import com.davidhsu.newssideproject.R
@@ -11,6 +12,12 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.android.synthetic.main.activity_lunch.*
 
 /**
@@ -40,6 +47,8 @@ class SplashActivity : BaseActivity() {
         supportActionBar!!.hide()
         setContentView(R.layout.activity_lunch)
 
+        startCheckPermission()
+
         val clientId = getString(R.string.client_id)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
@@ -50,6 +59,24 @@ class SplashActivity : BaseActivity() {
         googleLogin.setOnClickListener { googleLogin() }
         fbLogin.setOnClickListener { faceBookLogin() }
 
+    }
+
+    private fun startCheckPermission() {
+        Dexter.withActivity(this).withPermission(Manifest.permission.ACCESS_COARSE_LOCATION).withListener(object : PermissionListener{
+            override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                LogUtil.d("Location check Granted")
+            }
+
+            override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
+
+            }
+
+            override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                LogUtil.d("Location check Denied")
+                finish()
+            }
+
+        }).check()
     }
 
     private fun googleLogin() {
@@ -65,11 +92,11 @@ class SplashActivity : BaseActivity() {
                 val accessToken = AccessToken.getCurrentAccessToken()
                 val request = GraphRequest.newMeRequest(
                     accessToken
-                ) { `object`, response ->
-                    val fbId = `object`.getString("id")
-                    val fbMail = `object`.getString("email")
+                ) { dataObject, response ->
+                    val fbId = dataObject.getString("id")
+                    val fbMail = dataObject.getString("email")
                     val fbToken = loginResult.accessToken.token
-                    val fbName = `object`.getString("name")
+                    val fbName = dataObject.getString("name")
                     val userProfilePicture = "https://graph.facebook.com/$fbId/picture?type=large"
                     LogUtil.d("Facebook mail = $fbMail , Facebook token = $fbToken , Facebook name = $fbName ")
 
@@ -94,6 +121,7 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun intentToMainActivity(name: String?, email: String?, userProfilePicture: String?) {
+        LogUtil.d("intentToMainActivity")
         val intent = Intent(this,MainActivity::class.java).apply {
             putExtra("name", name)
             putExtra("email", email)
