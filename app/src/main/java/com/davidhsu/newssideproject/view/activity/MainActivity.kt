@@ -1,5 +1,7 @@
 package com.davidhsu.newssideproject.view.activity
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.content.ContextCompat
@@ -10,6 +12,7 @@ import com.davidhsu.newssideproject.adapter.MainActivityViewPagerAdapter
 import com.davidhsu.newssideproject.view.fragment.AboutFragment
 import com.davidhsu.newssideproject.view.fragment.NewsFragment
 import com.davidhsu.newssideproject.view.fragment.WeatherFragment
+import com.davidhsu.newssideproject.viewmodel.MainActivityViewModel
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -18,20 +21,34 @@ class MainActivity : BaseActivity() {
     private var userMail = ""
     private var name = ""
     private var photoUrl = ""
+    private var currentLocation = ""
 
     private val adapter by lazy {
         MainActivityViewPagerAdapter(supportFragmentManager)
     }
 
+    private val viewModel by lazy {
+        ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar!!.hide()
+        supportActionBar?.hide()
         setContentView(R.layout.activity_main)
+
+        viewModel.getCurrentLocation(this)
 
         getIntentData()
         initStatusBar()
-        initViewPager()
         initListener()
+        setObserver()
+    }
+
+    private fun setObserver() {
+        viewModel.currentLocation.observe(this, Observer { currentLocation ->
+            this.currentLocation = currentLocation.toString()
+            initViewPager()
+        })
     }
 
     private fun getIntentData() {
@@ -48,16 +65,25 @@ class MainActivity : BaseActivity() {
 
     private fun initViewPager() {
 
-        val bundle = Bundle()
-        bundle.putString("email", userMail)
-        bundle.putString("name", name)
-        bundle.putString("photoUrl", photoUrl)
+        val newsBundle = Bundle().apply {
+            putString("email", userMail)
+            putString("name", name)
+            putString("photoUrl", photoUrl)
+        }
+
+        val weatherBundle = Bundle().apply {
+            putString("location", currentLocation)
+        }
 
         adapter.apply {
             val newsFragment = NewsFragment()
-            newsFragment.arguments = bundle
+            newsFragment.arguments = newsBundle
             addFragment(newsFragment)
-            addFragment(WeatherFragment())
+
+            val weatherFragment = WeatherFragment()
+            weatherFragment.arguments = weatherBundle
+            addFragment(weatherFragment)
+
             addFragment(AboutFragment())
         }
 
@@ -72,7 +98,6 @@ class MainActivity : BaseActivity() {
 
     private val onPageChangeListener = (object : ViewPager.OnPageChangeListener{
         override fun onPageScrollStateChanged(state: Int) {
-
         }
 
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -80,7 +105,6 @@ class MainActivity : BaseActivity() {
         }
 
         override fun onPageSelected(position: Int) {
-
         }
 
     })
@@ -102,5 +126,4 @@ class MainActivity : BaseActivity() {
         }
         false
     }
-
 }

@@ -43,8 +43,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     //paging
     implementation 'android.arch.paging:runtime:1.0.1'
-    //circleImageView
-    implementation 'de.hdodenhof:circleimageview:3.0.0'
     //RxJava
     implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
@@ -61,5 +59,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
     //circleimageview
     implementation 'de.hdodenhof:circleimageview:3.0.1'
+    //permissions check
+    implementation 'com.karumi:dexter:5.0.0'
 
 }

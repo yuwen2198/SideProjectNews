@@ -10,15 +10,15 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.davidhsu.newssideproject.R
 import com.davidhsu.newssideproject.api.model.Article
-import kotlinx.android.synthetic.main.recycleview_header.view.*
-import kotlinx.android.synthetic.main.recycleview_news_item.view.*
+import kotlinx.android.synthetic.main.fragment_news_recycler_header.view.*
+import kotlinx.android.synthetic.main.fragment_news_recycler_item.view.*
 
 /**
  *
  * @author : DavidHsu on 2019/03/28
  *
  */
-class RecycleViewAdapter(private var items: List<Article>, private val context: FragmentActivity?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class NewsRecycleViewAdapter(private var items: List<Article>, private val context: FragmentActivity?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val HEADER_TYPE = 0
@@ -35,10 +35,10 @@ class RecycleViewAdapter(private var items: List<Article>, private val context: 
         val layoutInflater = LayoutInflater.from(parent.context)
 
         return if (viewType == NEWS_TYPE) {
-            val view = layoutInflater.inflate(R.layout.recycleview_news_item, parent, false)
+            val view = layoutInflater.inflate(R.layout.fragment_news_recycler_item, parent, false)
             RecycleViewViewHolder(view)
         } else {
-            val view = layoutInflater.inflate(R.layout.recycleview_header, parent, false)
+            val view = layoutInflater.inflate(R.layout.fragment_news_recycler_header, parent, false)
             HeaderViewHolder(view)
         }
     }
