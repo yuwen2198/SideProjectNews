@@ -9,7 +9,6 @@ import android.content.Context
 import android.location.*
 import android.widget.Toast
 import com.davidhsu.newssideproject.utils.LogUtil
-import java.io.IOException
 import java.util.*
 
 /**
@@ -49,7 +48,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         LogUtil.d("addresses = $addresses")
 
         if (!checkGPSLocationIsValid()) {
-            Toast.makeText(activity,"1 獲取位置失敗 ， 使用預設值為臺北市", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity,"獲取位置失敗 ， 使用預設值為臺北市", Toast.LENGTH_SHORT).show()
             currentLocation.value = "臺北市"
         }
 
@@ -68,14 +67,14 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 }
                 else -> {
                     currentLocation.value = "臺北市"
-                    Toast.makeText(activity,"2 獲取位置失敗 ， 使用預設值為臺北市", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity,"獲取位置失敗 ， 使用預設值為臺北市", Toast.LENGTH_SHORT).show()
                 }
             }
 
         } else {
             LogUtil.d("fail")
             currentLocation.value = "臺北市"
-            Toast.makeText(activity,"3 獲取位置失敗 ， 使用預設值為臺北市", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity,"獲取位置失敗 ， 使用預設值為臺北市", Toast.LENGTH_SHORT).show()
         }
     }
 

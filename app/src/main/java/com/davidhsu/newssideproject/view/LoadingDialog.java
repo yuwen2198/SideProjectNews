@@ -21,7 +21,7 @@ public class LoadingDialog extends Dialog {
 
     private TextView tvLoading;
 
-    public LoadingDialog(@NonNull Context context, String message, int imageId) {
+    public LoadingDialog(Context context, String message, int imageId) {
         this(context, R.style.LoadingDialog,message, imageId,false);
     }
 
