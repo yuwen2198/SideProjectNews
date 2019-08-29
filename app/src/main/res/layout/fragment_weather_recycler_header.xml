@@ -30,16 +30,49 @@
                 android:layout_marginTop="8dp"/>
 
         <TextView
+                android:id="@+id/startTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="2019-08-28 12:00:00"
+                android:textColor="@color/white"
+                android:layout_marginEnd="8dp"
+                card_view:layout_constraintEnd_toStartOf="@+id/textView3"
+                card_view:layout_constraintBottom_toBottomOf="@+id/textView3"
+                card_view:layout_constraintTop_toTopOf="@+id/textView3"/>
+
+        <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text=" ~ "
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/location"
+                android:layout_marginTop="8dp"/>
+
+        <TextView
+                android:id="@+id/endTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="2019-08-28 18:00:00"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                android:layout_marginStart="8dp"/>
+
+        <TextView
                 android:id="@+id/weatherStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                app:layout_constraintTop_toBottomOf="@+id/location"
                 android:textSize="30sp"
                 tools:text="天氣狀況"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp"
+                card_view:layout_constraintTop_toBottomOf="@+id/textView3"/>
 
         <ImageView
                 android:id="@+id/cloudImage"
