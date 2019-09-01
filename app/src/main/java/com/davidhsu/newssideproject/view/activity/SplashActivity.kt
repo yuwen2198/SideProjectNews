@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import com.davidhsu.newssideproject.R
+import com.davidhsu.newssideproject.sharedpreferences.accountSharePreference
 import com.davidhsu.newssideproject.utils.LogUtil
 import com.facebook.*
 import com.facebook.login.LoginManager
@@ -40,6 +41,10 @@ class SplashActivity : BaseActivity() {
         CallbackManager.Factory.create()
     }
 
+    private val sharedPreference by lazy {
+        accountSharePreference(this)
+    }
+
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,8 +61,16 @@ class SplashActivity : BaseActivity() {
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        googleLogin.setOnClickListener { googleLogin() }
-        fbLogin.setOnClickListener { faceBookLogin() }
+        val isFirstLogin = sharedPreference.isFirstLogin()
+        if (isFirstLogin) {
+            googleLogin.setOnClickListener { googleLogin() }
+            fbLogin.setOnClickListener { faceBookLogin() }
+        } else {
+            val name = sharedPreference.getName()
+            val email = sharedPreference.getEmail()
+            val photo = sharedPreference.getPhoto()
+            intentToMainActivity(name, email, photo)
+        }
 
     }
 
@@ -99,7 +112,12 @@ class SplashActivity : BaseActivity() {
                     val fbName = dataObject.getString("name")
                     val userProfilePicture = "https://graph.facebook.com/$fbId/picture?type=large"
                     LogUtil.d("Facebook mail = $fbMail , Facebook token = $fbToken , Facebook name = $fbName ")
-
+                    sharedPreference.apply {
+                        setIsFirstLogin(false)
+                        setName(fbName)
+                        setEmail(fbMail)
+                        setPhoto(userProfilePicture)
+                    }
                     intentToMainActivity(fbName, fbMail, userProfilePicture)
                 }
 
@@ -121,7 +139,6 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun intentToMainActivity(name: String?, email: String?, userProfilePicture: String?) {
-        LogUtil.d("intentToMainActivity")
         val intent = Intent(this,MainActivity::class.java).apply {
             putExtra("name", name)
             putExtra("email", email)
@@ -139,6 +156,12 @@ class SplashActivity : BaseActivity() {
                 LogUtil.d("Google SDK login success !!")
                 val acct = GoogleSignIn.getLastSignedInAccount(baseContext)
                 acct?.let {
+                    sharedPreference.apply {
+                        setIsFirstLogin(false)
+                        setName(acct.givenName.toString())
+                        setEmail(acct.email.toString())
+                        setPhoto(acct.photoUrl.toString())
+                    }
                     intentToMainActivity(acct.givenName, acct.email, acct.photoUrl.toString())
                     LogUtil.d("Google name = ${acct.givenName} , Google mail = ${acct.email} , Google photo = ${acct.photoUrl.toString()}")
                 } ?: run {
