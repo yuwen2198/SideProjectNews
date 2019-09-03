@@ -42,7 +42,7 @@ class WeatherRecyclerViewAdapter(private val activity: Activity?, private var lo
     }
 
     private fun weatherItemView(holder: WeatherRecycleViewViewHolder, position: Int) {
-        var statusCode = ""
+        var statusCode = String()
         for (i in location.weatherElement.indices) {
             if (location.weatherElement[i].elementName == "Wx") {
                 holder.itemView.weatherStatus.text = location.weatherElement[i].time[position].parameter.parameterName
@@ -68,7 +68,7 @@ class WeatherRecyclerViewAdapter(private val activity: Activity?, private var lo
 
     private fun weatherHeaderView(holderWeather: WeatherHeaderViewHolder) {
         holderWeather.itemView.location.text = location.locationName
-        var statusCode = ""
+        var statusCode = String()
         for (position in location.weatherElement.indices) {
             if (location.weatherElement[position].elementName == "Wx") {
                 holderWeather.itemView.weatherStatus.text = location.weatherElement[position].time[0].parameter.parameterName

@@ -18,11 +18,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
-    private var userMail = ""
-    private var name = ""
-    private var photoUrl = ""
-    private var currentLocation = ""
-    private var logInType = ""
+    private var userMail = String()
+    private var name = String()
+    private var photoUrl = String()
+    private var currentLocation = String()
+    private var logInType = String()
 
     private val adapter by lazy {
         MainActivityViewPagerAdapter(supportFragmentManager)

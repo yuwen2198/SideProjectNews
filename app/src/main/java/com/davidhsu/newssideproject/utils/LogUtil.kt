@@ -9,8 +9,8 @@ import android.util.Log
  */
 object LogUtil {
 
-    private var className: String = ""
-    private var methodName: String = ""
+    private var className: String = String()
+    private var methodName: String = String()
     private var lineNumber: Int = 0
     var isDebuggable = true
 

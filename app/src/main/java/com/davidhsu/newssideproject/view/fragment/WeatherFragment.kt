@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_weather.view.*
  */
 class WeatherFragment : Fragment() {
 
-    private var currentLocation = ""
+    private var currentLocation = String()
 
     private val viewModel by lazy {
         ViewModelProviders.of(this).get(WeatherFragmentViewModel::class.java)
