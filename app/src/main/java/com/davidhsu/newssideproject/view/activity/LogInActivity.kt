@@ -4,7 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import com.davidhsu.newssideproject.R
-import com.davidhsu.newssideproject.sharedpreferences.accountSharePreference
+import com.davidhsu.newssideproject.sharedpreferences.AccountSharePreference
 import com.davidhsu.newssideproject.utils.LogUtil
 import com.facebook.*
 import com.facebook.login.LoginManager
@@ -42,7 +42,7 @@ class LogInActivity : BaseActivity() {
     }
 
     private val sharedPreference by lazy {
-        accountSharePreference(this)
+        AccountSharePreference(this)
     }
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient

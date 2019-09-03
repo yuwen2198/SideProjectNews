@@ -37,9 +37,9 @@ class NewsFragment : Fragment() {
     private var data: List<Article> = ArrayList()
     private var disposable: Disposable? = null
 
-    private var userMail = ""
-    private var name = ""
-    private var photo = ""
+    private var userMail = String()
+    private var name = String()
+    private var photo = String()
 
     private val loadingDialog : LoadingDialog by lazy {
         LoadingDialog(context, getString(R.string.loading), R.drawable.ic_dialog_loading)

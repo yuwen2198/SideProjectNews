@@ -27,9 +27,9 @@ class NewsRecycleViewAdapter(private var items: List<Article>, private val conte
         const val HEADER_COUNT = 1
     }
 
-    private var userMail = ""
-    private var name = ""
-    private var photoUrl = ""
+    private var userMail = String()
+    private var name = String()
+    private var photoUrl = String()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

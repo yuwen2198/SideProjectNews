@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.davidhsu.newssideproject.R
-import com.davidhsu.newssideproject.sharedpreferences.accountSharePreference
+import com.davidhsu.newssideproject.sharedpreferences.AccountSharePreference
 import com.davidhsu.newssideproject.view.activity.LogInActivity
 import com.facebook.login.LoginManager
 import kotlinx.android.synthetic.main.fragment_about_recycler_item.view.*
@@ -16,10 +16,10 @@ import kotlinx.android.synthetic.main.fragment_about_recycler_item.view.*
  * @author : david.hsu on 2019/9/2
  */
 class AboutRecyclerViewAdapter(
-    private val activity: Activity?, private val logInType: String, private var aboutList: List<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
+    private val activity: Activity, private val logInType: String, private var aboutList: List<String>) : RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
 
     private val sharedPreference by lazy {
-        accountSharePreference(activity!!)
+        AccountSharePreference(activity)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

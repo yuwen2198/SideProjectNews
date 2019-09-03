@@ -8,7 +8,7 @@ import android.content.SharedPreferences
  * @author : DavidHsu on 2019/09/01
  *
  */
-class accountSharePreference(context: Context) {
+class AccountSharePreference(context: Context) {
 
     private val sharedPreference: SharedPreferences = context.getSharedPreferences(IS_FIRST_LOGIN, Context.MODE_PRIVATE)
     private val editor: SharedPreferences.Editor = sharedPreference.edit()
