@@ -26,10 +26,12 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="16dp" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
 
         <TextView
-                android:id="@+id/name"
+                android:id="@+id/nameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="name"
@@ -57,7 +59,7 @@
                 android:layout_marginEnd="8dp"
                 card_view:layout_constraintEnd_toStartOf="@+id/guideline"
                 android:layout_marginTop="8dp"
-                card_view:layout_constraintTop_toBottomOf="@+id/name"/>
+                card_view:layout_constraintTop_toBottomOf="@+id/nameText"/>
 
         <android.support.constraint.Guideline
                 android:layout_width="wrap_content"

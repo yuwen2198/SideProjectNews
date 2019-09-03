@@ -22,6 +22,7 @@ class MainActivity : BaseActivity() {
     private var name = ""
     private var photoUrl = ""
     private var currentLocation = ""
+    private var logInType = ""
 
     private val adapter by lazy {
         MainActivityViewPagerAdapter(supportFragmentManager)
@@ -55,6 +56,7 @@ class MainActivity : BaseActivity() {
         userMail = intent.getStringExtra("email")
         name = intent.getStringExtra("name")
         photoUrl = intent.getStringExtra("photoUrl")
+        logInType = intent.getStringExtra("loginType")
     }
 
     private fun initStatusBar() = window.run {
@@ -75,6 +77,12 @@ class MainActivity : BaseActivity() {
             putString("location", currentLocation)
         }
 
+        val aboutBundle = Bundle().apply {
+            putString("loginType", logInType)
+            putString("name", name)
+            putString("photoUrl", photoUrl)
+        }
+
         adapter.apply {
             val newsFragment = NewsFragment()
             newsFragment.arguments = newsBundle
@@ -84,7 +92,9 @@ class MainActivity : BaseActivity() {
             weatherFragment.arguments = weatherBundle
             addFragment(weatherFragment)
 
-            addFragment(AboutFragment())
+            val aboutFragment = AboutFragment()
+            aboutFragment.arguments = aboutBundle
+            addFragment(aboutFragment)
         }
 
         viewpager.adapter = adapter

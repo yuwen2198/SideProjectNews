@@ -58,7 +58,7 @@ class NewsRecycleViewAdapter(private var items: List<Article>, private val conte
     }
 
     private fun setHeaderView(holder: HeaderViewHolder) {
-        holder.itemView.name.text = name
+        holder.itemView.nameText.text = name
         holder.itemView.idText.text = userMail
         holder.itemView.idText.requestFocus()
         Glide.with(context).load(photoUrl).into(holder.itemView.profile_image)

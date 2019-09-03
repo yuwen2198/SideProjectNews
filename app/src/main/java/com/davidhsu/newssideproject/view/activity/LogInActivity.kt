@@ -69,7 +69,8 @@ class LogInActivity : BaseActivity() {
             val name = sharedPreference.getName()
             val email = sharedPreference.getEmail()
             val photo = sharedPreference.getPhoto()
-            intentToMainActivity(name, email, photo)
+            val LogInType = sharedPreference.getLogInType()
+            intentToMainActivity(LogInType, name, email, photo)
         }
 
     }
@@ -114,11 +115,12 @@ class LogInActivity : BaseActivity() {
                     LogUtil.d("Facebook mail = $fbMail , Facebook token = $fbToken , Facebook name = $fbName ")
                     sharedPreference.apply {
                         setIsFirstLogin(false)
+                        setLogInType("facebook")
                         setName(fbName)
                         setEmail(fbMail)
                         setPhoto(userProfilePicture)
                     }
-                    intentToMainActivity(fbName, fbMail, userProfilePicture)
+                    intentToMainActivity("facebook", fbName, fbMail, userProfilePicture)
                 }
 
                 val parameters = Bundle()
@@ -138,8 +140,9 @@ class LogInActivity : BaseActivity() {
         })
     }
 
-    private fun intentToMainActivity(name: String?, email: String?, userProfilePicture: String?) {
+    private fun intentToMainActivity(loginType: String, name: String?, email: String?, userProfilePicture: String?) {
         val intent = Intent(this,MainActivity::class.java).apply {
+            putExtra("loginType", loginType)
             putExtra("name", name)
             putExtra("email", email)
             putExtra("photoUrl", userProfilePicture)
@@ -158,11 +161,12 @@ class LogInActivity : BaseActivity() {
                 acct?.let {
                     sharedPreference.apply {
                         setIsFirstLogin(false)
+                        setLogInType("google")
                         setName(acct.givenName.toString())
                         setEmail(acct.email.toString())
                         setPhoto(acct.photoUrl.toString())
                     }
-                    intentToMainActivity(acct.givenName, acct.email, acct.photoUrl.toString())
+                    intentToMainActivity("google", acct.givenName, acct.email, acct.photoUrl.toString())
                     LogUtil.d("Google name = ${acct.givenName} , Google mail = ${acct.email} , Google photo = ${acct.photoUrl.toString()}")
                 } ?: run {
                     LogUtil.e("Google SDK GoogleSignInAccount object is null and can't get info !!")

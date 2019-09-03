@@ -18,6 +18,7 @@ class accountSharePreference(context: Context) {
         private const val NAME = "name"
         private const val EMAIL = "email"
         private const val PHOTOURL = "photo_url"
+        private const val LOGIN_TYPE = "login_type"
     }
 
     fun setIsFirstLogin(status: Boolean) {
@@ -43,4 +44,14 @@ class accountSharePreference(context: Context) {
     }
 
     fun getPhoto(): String = sharedPreference.getString(PHOTOURL, "")
+
+    fun setLogInType(type: String) {
+        editor.putString(LOGIN_TYPE, type) .commit()
+    }
+
+    fun getLogInType(): String = sharedPreference.getString(LOGIN_TYPE, "")
+
+    fun clear() {
+        editor.clear().commit()
+    }
 }
