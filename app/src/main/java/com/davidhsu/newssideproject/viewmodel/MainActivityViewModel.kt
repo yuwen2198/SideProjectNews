@@ -3,11 +3,11 @@ package com.davidhsu.newssideproject.viewmodel
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import android.location.*
 import android.widget.Toast
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.davidhsu.newssideproject.utils.LogUtil
 import java.util.*
 

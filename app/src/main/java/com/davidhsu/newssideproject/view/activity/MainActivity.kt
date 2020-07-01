@@ -1,19 +1,18 @@
 package com.davidhsu.newssideproject.view.activity
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.ViewPager
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.viewpager.widget.ViewPager
 import com.davidhsu.newssideproject.R
 import com.davidhsu.newssideproject.adapter.MainActivityViewPagerAdapter
 import com.davidhsu.newssideproject.view.fragment.AboutFragment
 import com.davidhsu.newssideproject.view.fragment.NewsFragment
 import com.davidhsu.newssideproject.view.fragment.WeatherFragment
 import com.davidhsu.newssideproject.viewmodel.MainActivityViewModel
-
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {

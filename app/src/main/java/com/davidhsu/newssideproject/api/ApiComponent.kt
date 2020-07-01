@@ -1,6 +1,6 @@
 package com.davidhsu.newssideproject.api
 
-import android.support.annotation.NonNull
+import androidx.annotation.NonNull
 import com.davidhsu.newssideproject.callback.HttpCallBack
 import com.davidhsu.newssideproject.utils.LogUtil
 import com.davidhsu.newssideproject.api.model.ResponseNewsData

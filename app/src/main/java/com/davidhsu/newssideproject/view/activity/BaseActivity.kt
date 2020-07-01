@@ -1,6 +1,6 @@
 package com.davidhsu.newssideproject.view.activity
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.davidhsu.newssideproject.R
 import com.davidhsu.newssideproject.view.LoadingDialog
 

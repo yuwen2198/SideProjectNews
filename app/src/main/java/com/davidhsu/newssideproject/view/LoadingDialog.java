@@ -3,13 +3,15 @@ package com.davidhsu.newssideproject.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+
 import com.davidhsu.newssideproject.R;
 
 public class LoadingDialog extends Dialog {

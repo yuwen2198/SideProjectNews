@@ -1,16 +1,15 @@
 package com.davidhsu.newssideproject.view.fragment
 
-import android.support.v4.app.Fragment
 import android.os.Bundle
-import android.support.annotation.Nullable
-import android.support.v7.widget.LinearLayoutManager
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
+import androidx.annotation.Nullable
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.davidhsu.newssideproject.R
 import com.davidhsu.newssideproject.adapter.AboutRecyclerViewAdapter
-import kotlinx.android.synthetic.main.fragment_about.*
 import kotlinx.android.synthetic.main.fragment_about.view.*
 
 /**
@@ -24,6 +23,8 @@ class AboutFragment : Fragment() {
     private var name = String()
     private var photo = String()
     private var aboutList: MutableList<String> = ArrayList()
+
+    private lateinit var baseView: View
 
     private val aboutFragmentAdapter by lazy {
         aboutList.apply {
@@ -40,15 +41,17 @@ class AboutFragment : Fragment() {
             name = arguments?.getString("name").toString()
             photo = arguments?.getString("photoUrl").toString()
 
-            Glide.with(context).load(photo).into(profileImage)
-            nameText.text = name
+            Glide.with(context).load(photo).into(baseView.profileImage)
+            baseView.nameText.text = name
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, @Nullable container: ViewGroup?, @Nullable savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_about, container, false).apply {
+        baseView = inflater.inflate(R.layout.fragment_about, container, false)
+        baseView.aboutRecyclerView.apply {
             aboutRecyclerView.layoutManager = LinearLayoutManager(activity)
             aboutRecyclerView.adapter = aboutFragmentAdapter
         }
+        return baseView
     }
 }
