@@ -77,7 +77,7 @@ class NewsRecycleViewAdapter(private var items: List<Article>, private val conte
         val imgUrl = data.urlToImage
         Glide.with(context).load(imgUrl).centerCrop().fitCenter().into(holder.itemView.news_img)
 
-        holder.itemView.new_content.text = data.title
+        holder.itemView.news_content.text = data.title
         holder.itemView.news_publishedAt.text = data.publishedAt
         holder.itemView.newsRootView.setOnClickListener { intentNews(data) }
     }

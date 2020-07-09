@@ -69,7 +69,6 @@ dependencies {
     implementation 'com.karumi:dexter:5.0.0'
 
     implementation 'com.airbnb.android:epoxy:3.8.0'
-    // Add the annotation processor if you are using Epoxy's annotations (recommended)
-    annotationProcessor 'com.airbnb.android:epoxy-processor:3.8.0'
+    kapt 'com.airbnb.android:epoxy-processor:3.8.0'
 
 }

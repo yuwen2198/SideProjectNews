@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:id="@+id/cv_item"
+        android:id="@+id/root_item"
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="4dp"
@@ -30,7 +30,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/nameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
                 card_view:layout_constraintStart_toEndOf="@+id/profile_image"
                 card_view:layout_constraintEnd_toStartOf="@+id/guideline"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/idText"
                 android:text="id"
                 android:layout_width="0dp"

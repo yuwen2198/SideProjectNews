@@ -16,6 +16,7 @@ import com.davidhsu.newssideproject.api.NewsApi
 import com.davidhsu.newssideproject.api.RetrofitComponent
 import com.davidhsu.newssideproject.api.model.Article
 import com.davidhsu.newssideproject.api.model.ResponseNewsData
+import com.davidhsu.newssideproject.epoxy.NewsController
 import com.davidhsu.newssideproject.utils.LogUtil
 import com.davidhsu.newssideproject.view.LoadingDialog
 import com.davidhsu.newssideproject.viewmodel.NewsFragmentViewModel
@@ -49,6 +50,10 @@ class NewsFragment : Fragment() {
         NewsRecycleViewAdapter(data, activity)
     }
 
+    private val newsController: NewsController by lazy {
+        NewsController()
+    }
+
     private val viewModel by lazy {
         ViewModelProviders.of(this).get(NewsFragmentViewModel::class.java)
     }
@@ -66,7 +71,7 @@ class NewsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val newsApi = RetrofitComponent.getNewsInstance().create(NewsApi::class.java)
-        viewModel.getDataWithCoroutine(newsApi)
+        viewModel.getDataWithRetrofit(newsApi)
         setUpObserver()
     }
 
@@ -75,7 +80,8 @@ class NewsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_news, container, false).apply {
             showProgressBar()
             newsRV.layoutManager = LinearLayoutManager(activity)
-            newsRV.adapter = adapterNews
+//            newsRV.adapter = adapterNews
+            newsRV.adapter = newsController.adapter
         }
     }
 
@@ -97,7 +103,8 @@ class NewsFragment : Fragment() {
             body?.let { ResponseNewsData ->
                 if (ResponseNewsData.status == responseSuccess) {
                     data =  ResponseNewsData.articles
-                    adapterNews.setData(data)
+//                    adapterNews.setData(data)
+                    newsController.setData(data)
                     cancelProgressBar()
                     LogUtil.d("Success , data size = ${data.size}")
                 } else {

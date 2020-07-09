@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:id="@+id/cv_item"
+        android:id="@+id/root_item"
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="4dp"
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/news_form"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
@@ -30,8 +30,8 @@
                 tools:text="來自"
                 />
 
-        <TextView
-                android:id="@+id/new_content"
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/news_content"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
@@ -58,17 +58,17 @@
                 android:layout_marginEnd="16dp"
                 card_view:layout_constraintEnd_toEndOf="parent"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/news_publishedAt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="@color/white"
                 android:layout_marginBottom="8dp"
-                card_view:layout_constraintStart_toStartOf="@+id/new_content"
+                card_view:layout_constraintStart_toStartOf="@+id/news_content"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 tools:text="發布時間"
-                card_view:layout_constraintTop_toBottomOf="@+id/new_content"/>
+                card_view:layout_constraintTop_toBottomOf="@+id/news_content"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
